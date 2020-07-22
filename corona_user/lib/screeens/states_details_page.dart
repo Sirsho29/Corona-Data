@@ -37,29 +37,62 @@ class StateDetailsPageState extends State<StateDetailsPage> {
           active: element['active'], stateCode: element['statecode']));
     });
     return Scaffold(
-        backgroundColor: Colors.black87,
+        backgroundColor: Color.fromRGBO(210, 34, 45, 0.7),
         body: CustomScrollView(slivers: [
           SliverAppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.black87,
-            expandedHeight: 230,
-            pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.all(0),
-              // title: ,
-              background: Container(
-                height: 230,
-                width: MediaQuery.of(context).size.width,
-                child: Chart(
-                  data: chartData,
-                  title: 'Top 10 Affected States',
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              backgroundColor: Color.fromRGBO(210, 34, 45, 1),
+              expandedHeight: 230,
+              pinned: false,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: EdgeInsets.all(0),
+                // title: ,
+                background: Container(
+                  height: 230,
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>[
+                      Chart(
+                        data: chartData,
+                        title: 'Top 10 Affected States',
+                      ),
+                      Positioned(
+                        right: MediaQuery.of(context).padding.right + 30,
+                        top: MediaQuery.of(context).padding.top + 30,
+                        child: FloatingActionButton(
+                            child: Icon(Icons.zoom_out_map),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  builder: (ctx) {
+                                    return Container(
+                                      height: 500,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(30.0),
+                                        child: Image.network(
+                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/India_COVID-19_cases_density_map.svg/768px-India_COVID-19_cases_density_map.svg.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ),
+              )),
           SliverAppBar(
+            elevation: 0,
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.black87,
+            backgroundColor: Color.fromRGBO(210, 34, 45, 1),
             pinned: true,
             actions: <Widget>[],
             actionsIconTheme: IconThemeData(),
@@ -75,8 +108,8 @@ class StateDetailsPageState extends State<StateDetailsPage> {
                   enableSuggestions: true,
                   textAlign: TextAlign.center,
                   showCursor: true,
-                  cursorRadius: Radius.circular(15),
-                  cursorWidth: 5,
+                  cursorRadius: Radius.circular(50),
+                  //cursorWidth: 5,
                   decoration: InputDecoration(
                     labelStyle: GoogleFonts.quicksand(color: Colors.white),
                     labelText: "Search State",
@@ -118,11 +151,14 @@ class StateDetailsPageState extends State<StateDetailsPage> {
                 return Container();
 
               return Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 child: Card(
                   elevation: 10,
-                  color: Colors.grey[900],
+                  color: Color.fromRGBO(210, 34, 45, 1),
                   shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.white,
+                    ),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
@@ -150,7 +186,26 @@ class StateDetailsPageState extends State<StateDetailsPage> {
                               ),
                             ),
                             Text(
-                              "${data[index]["confirmed"]}".padLeft(7),
+                              "${data[index]["confirmed"]}",
+                              style: GoogleFonts.quicksand(
+                                color: Colors.white70,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Active",
+                              style: GoogleFonts.quicksand(
+                                fontSize: 17,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            Text(
+                              "${data[index]["active"]}",
                               style: GoogleFonts.quicksand(
                                 color: Colors.white70,
                                 fontSize: 18,
@@ -170,7 +225,7 @@ class StateDetailsPageState extends State<StateDetailsPage> {
                               ),
                             ),
                             Text(
-                              "${data[index]["recovered"]}".padLeft(7),
+                              "${data[index]["recovered"]}",
                               style: GoogleFonts.quicksand(
                                 color: Colors.white70,
                                 fontSize: 18,
@@ -190,7 +245,7 @@ class StateDetailsPageState extends State<StateDetailsPage> {
                               ),
                             ),
                             Text(
-                              "${data[index]["deaths"]}".padLeft(7),
+                              "${data[index]["deaths"]}",
                               style: GoogleFonts.quicksand(
                                 color: Colors.white70,
                                 fontSize: 18,

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:corona_user/models/statewise.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -27,21 +29,23 @@ class Chart extends StatelessWidget {
       return Center(child: CircularProgressIndicator());
     else
       return ClipRRect(
-        borderRadius: BorderRadius.only(
-            bottomLeft:
-                Radius.elliptical(MediaQuery.of(context).size.width / 2, 60),
-            bottomRight:
-                Radius.elliptical(MediaQuery.of(context).size.width / 2, 60)),
+        borderRadius: (kIsWeb)
+            ? BorderRadius.only(
+                bottomLeft: Radius.elliptical(
+                    MediaQuery.of(context).size.width / 2, 60),
+                bottomRight: Radius.elliptical(
+                    MediaQuery.of(context).size.width / 2, 60))
+            : null,
         child: Container(
-          padding: EdgeInsets.all(0),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           color: Colors.white,
-          height: 250,
+          height: 250 + MediaQuery.of(context).padding.top,
           width: double.infinity,
           child: Column(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(0),
-                height: 200,
+                height: 200 - MediaQuery.of(context).padding.top / 2,
                 child: charts.BarChart(
                   items,
                   animate: true,
@@ -50,15 +54,13 @@ class Chart extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: GoogleFonts.quicksand(
-                      color: Colors.lightBlue,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
+                padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+                child: Text(
+                  title,
+                  style: GoogleFonts.quicksand(
+                    color: Colors.lightBlue,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
                   ),
                 ),
               ),

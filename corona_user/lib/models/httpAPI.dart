@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -32,7 +32,7 @@ DateTime getDateTimeObj(String date) {
   var segments = date.split(" ");
   int month = months.indexOf(segments[1]), day = int.parse(segments[0]);
 
-  var dateTime = DateTime(2019, month+1, day);
+  var dateTime = DateTime(2019, month + 1, day);
 
   return dateTime;
 }
@@ -42,5 +42,5 @@ class PandemicData {
   final String date;
   final String stateCode;
 
-  PandemicData({this.n, this.date,this.stateCode});
+  PandemicData({this.n, this.date, this.stateCode});
 }
