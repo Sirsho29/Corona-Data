@@ -60,9 +60,12 @@ class _EachChartState extends State<EachChart> {
     Map<DateTime, double> fdata = {};
     for (int i = 0; i < data.length; i++) {
       fdata.addAll({
-        DateTime.parse(
-                '20200${months.indexOf(data[i]['date'].trim().split(' ')[1]) + 1}${data[i]['date'].trim().split(' ')[0]}'):
-            int.parse(data[i][widget.type]).toDouble(),
+        DateTime.parse((months.indexOf(data[i]['date'].trim().split(' ')[1])) <
+                10
+            ? '20200${months.indexOf(data[i]['date'].trim().split(' ')[1]) + 1}${data[i]['date'].trim().split(' ')[0]}'
+            : '2020${months.indexOf(data[i]['date'].trim().split(' ')[1]) + 1}${data[i]['date'].trim().split(' ')[0]}'): int
+                .parse(data[i][widget.type])
+            .toDouble(),
       });
     }
     //print(fdata);
